@@ -117,7 +117,8 @@ else
         popd
         #endregion libunwind
     else
-        echo "PLATFORM is arm64, NOT compiling libunwind from source"
+        echo "PLATFORM is $PLATFORM, NOT compiling libunwind from source"
+        rm -rf "${LIBUNWIND_DIR}"
     fi
 fi
 
