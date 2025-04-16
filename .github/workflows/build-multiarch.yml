@@ -17,6 +17,7 @@ jobs:
       - name: Login to Quay
         run: |
           echo "${{ secrets.QUAY_TOKEN }}" | docker login quay.io -u "${{ secrets.QUAY_USER }}" --password-stdin
+          uname -a
 
       - name: Build and Push Multi-Arch Image
         run: |
