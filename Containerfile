@@ -46,8 +46,8 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 ARG VERSION=0.0.0
 ENV VERSION=$VERSION
-ARG PLATFORM=amd64
-ENV PLATFORM=$PLATFORM
+ARG TARGETARCH
+ENV PLATFORM=$TARGETARCH
 RUN .github/scripts/compile.sh
 RUN if [ "$PLATFORM" = "amd64" ]; then tar zxpf /qpid-proton-image.tar.gz --one-top-level=/image && tar zxpf /skupper-router-image.tar.gz --one-top-level=/image && tar zxpf /libwebsockets-image.tar.gz --one-top-level=/image && tar zxpf /libunwind-image.tar.gz --one-top-level=/image; fi
 RUN if [ "$PLATFORM" = "arm64" ]; then tar zxpf /qpid-proton-image.tar.gz --one-top-level=/image && tar zxpf /skupper-router-image.tar.gz --one-top-level=/image && tar zxpf /libwebsockets-image.tar.gz --one-top-level=/image; fi

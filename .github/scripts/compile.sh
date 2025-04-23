@@ -105,9 +105,9 @@ if [ -z "$PLATFORM" ]; then
     echo "Error: PLATFORM not specified. Exiting compile.sh"
     exit 1
 else
-    if [ "$PLATFORM" = "amd64" ]; then
-        #region libunwind
-        echo "PLATFORM is amd64, compiling libunwind from source"
+    if [ "$PLATFORM" = "amd64" ] && [ "$(uname -m)" = "x86_64" ]; then
+        # Only build libunwind on amd64 platform AND when running on amd64 host
+        echo "PLATFORM is amd64 and host is x86_64, compiling libunwind from source"
         pushd "${LIBUNWIND_DIR}"
         autoreconf -i
         ./configure
@@ -115,9 +115,8 @@ else
         DESTDIR="${LIBUNWIND_INSTALL_DIR}" make install
         tar -z -C "${LIBUNWIND_INSTALL_DIR}" -cf /libunwind-image.tar.gz usr
         popd
-        #endregion libunwind
     else
-        echo "PLATFORM is $PLATFORM, NOT compiling libunwind from source"
+        echo "PLATFORM is $PLATFORM or host is not x86_64, NOT compiling libunwind from source"
         rm -rf "${LIBUNWIND_DIR}"
     fi
 fi
